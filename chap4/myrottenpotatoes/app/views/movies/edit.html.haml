@@ -1,0 +1,18 @@
+%h2 Edit Movie
+/the default filled-in values of the form fields correspond to the movie's current attributes
+/helpers such as text_field will by default look for an instance variable shoe name matches their first argument
+/example: first argument is :movie, so text_field helper will look for a variable @movie
+/if it exists, the helper assumes that this form is for editing an existing object, and @movie's current attribute values will be used to populate form fields
+/if not, then form fields will be blank --> that's why better to name instance variable @movie
+= form_tag movie_path(@movie), :method => :put do
+
+  = label :movie, :title, 'Title'
+  = text_field :movie, 'title'
+
+  = label :movie, :rating, 'Rating'
+  = select :movie, :rating, Movie.all_ratings
+
+  = label :movie, :release_date, 'Released On'
+  = date_select :movie, :release_date
+
+  = submit_tag 'Save Changes'

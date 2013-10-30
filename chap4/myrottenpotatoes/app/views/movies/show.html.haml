@@ -1,0 +1,23 @@
+-# in app/views/movies/show.html.haml
+
+%h2 Details about #{@movie.title}
+/gives unique id's to the bullet list
+%ul#details
+  %li
+    Rating:
+    = @movie.rating
+  %li
+    Released on:
+    = @movie.release_date.strftime("%B %d, %Y") #strftime used for formatting
+
+%h3 Description:
+
+%p#description= @movie.description
+
+-# modify last 2 lines of app/views/movies/show.html.haml to:
+-# use edit_movie_path and movies_path instead of creating URIs manually
+= link_to 'Edit info', edit_movie_path(@movie)
+= link_to 'Back to movie list', movies_path #use the RESTful helper movies_path as a link, in general you cappend _path to any of the RESTful resource helpers in the leftmost column of the rake routes output to call a method that will generate the corresponding RESTful URI
+/button_to helper takes three arguments, the button's name, an options hash specifying the route or a URI encoding the route and another hash of optional HTML options
+/:method => :delete and :confirm => 'Are you sure?' are keys
+= button_to 'Delete', movie_path(@movie), :method => :delete, :confirm => 'Are you sure?'

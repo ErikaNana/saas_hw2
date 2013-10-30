@@ -1,0 +1,18 @@
+%h2 Create New Movie
+/form_tag method for generating a form requires a route to which the form should be submitted, which is a URI and an HTTP verb.
+/We use the RESTful URI helper and HTTP POST method to generate a route to the create action, as rake routes reminds us
+/not all input field types are supported by the form tag helpers (like date fields) and in some cases you need to generate forms whose fields don't necessarily correspond to the attributes of some ActiveRecord object
+/when form is submitted, the controller action can inspect params[] which will contain a key for each form field whose value is the user-supplied contents of that field
+/form field names created by the form tag helpers all have hames of the form params['movie']['title'], etc
+= form_tag movies_path, :method => :post do
+
+  = label :movie, :title, 'Title'
+  = text_field :movie, :title
+
+  = label :movie, :rating, 'Rating'
+  = select :movie, :rating, Movie.all_ratings
+
+  = label :movie, :release_date, 'Released On'
+  = date_select :movie, :release_date
+
+  = submit_tag 'Save Changes'
