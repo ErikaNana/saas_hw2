@@ -1,5 +1,13 @@
 -#  This file is app/views/movies/index.html.haml
 %h1 All Movies
+/need the 1 just to give it an arbitrary value
+= form_tag movies_path, :method => :get, :id => 'ratings_form' do
+  Include:
+  - @all_ratings.each do |rating|
+    = rating
+    /third param is booleam if rating is included in the hash or not, checked all initially
+    = check_box_tag "ratings[#{rating}]", 1, if @ratings; @ratings.include?(rating) else true end
+  = submit_tag 'Refresh', :id => 'ratings_submit'
 
 %table#movies
   %thead

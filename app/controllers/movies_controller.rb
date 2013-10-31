@@ -8,6 +8,14 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
+    @all_ratings = Movie.getRatings
+    #get just the keys
+    @ratings = params[:ratings]
+    if @ratings
+      @checked = @ratings.keys
+      #get the appropriate movies
+      @movies = Movie.find(:all, :conditions =>{:rating => @checked}, :order => 'rating ASCs')
+    end
     #figure out what kind of sort it is
     @sort = params[:sort]
     if @sort == 'title'
