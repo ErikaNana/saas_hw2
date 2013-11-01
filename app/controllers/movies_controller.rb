@@ -43,8 +43,9 @@ class MoviesController < ApplicationController
       session[:ratings] = @ratings
 
       #sort and get the correct movies
-      @checked = session[:ratings].keys
-
+      if sesson[:ratings]
+        @checked = session[:ratings].keys
+      end
       if session[:sort] == 'title'
         @movies = Movie.find(:all, :conditions =>{:rating =>@checked}, :order => 'title ASC')
       elsif session[:sort] = 'release_date'
