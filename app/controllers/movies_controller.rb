@@ -30,11 +30,6 @@ class MoviesController < ApplicationController
       @all_ratings.each do |rating|
         @ratings[rating] = true
       end
-=begin
-      @all_ratings.each do |rating|
-        @ratings[rating] = true
-      end
-=end
     end
 
 
