@@ -43,7 +43,7 @@ class MoviesController < ApplicationController
       session[:ratings] = @ratings
 
       #sort and get the correct movies
-      if sesson[:ratings]
+      if session[:ratings]
         @checked = session[:ratings].keys
       end
       if session[:sort] == 'title'
