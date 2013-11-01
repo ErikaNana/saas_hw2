@@ -9,21 +9,46 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
     @all_ratings = Movie.getRatings
-    #get just the keys
-    @ratings = params[:ratings]
-    if @ratings
-      @checked = @ratings.keys
-      #get the appropriate movies
-      @movies = Movie.find(:all, :conditions =>{:rating => @checked}, :order => 'rating ASCs')
+    redirect = false
+
+    #decide whether or not to use params or session for sort
+    if params[:sort]
+      @sort = params[:sort]
+    elsif session[:sort]
+      @sort = session[:sort]
+      redirect = true
     end
-    #figure out what kind of sort it is
-    @sort = params[:sort]
-    if @sort == 'title'
-      @movies = Movie.find(:all, :order =>'title ASC')
+
+    #decide whether or not to use params or session for ratings
+    if params[:ratings]
+      @ratings = params[:ratings]
+    elsif session[:ratings]
+      @ratings = session[:ratings]
+      redirect = true
+    else #default
+      @all_ratings.each do |rating|
+      @ratings[rating] = true
+      redirect = true
+      end
     end
-    if @sort == "release_date"
-       @movies = Movie.find(:all, :order =>'release_date ASC')
+
+
+    if redirect
+      redirect_to movies_path(:sort => @sort, :ratings => @ratings)
     end
+
+      #update session so they can be persisted
+      session[:sort] = @sort
+      session[:ratings] = @ratings
+
+      #sort and get the correct movies
+      @checked = session[:ratings].keys
+      @movies = Movie.find(:all, :conditions =>{:rating =>@checked})
+      if session[:sort] == 'title'
+        @movies = Movie.find(:all, :conditions =>{:rating =>@checked}, :order => 'title ASC')
+      elsif session[:sort] = 'release_date'
+        @movies = Movie.find(:all, :conditions =>{:rating =>@checked}, :order => 'release_date ASC')
+      end
   end
 
   def new

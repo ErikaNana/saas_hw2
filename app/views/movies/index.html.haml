@@ -6,7 +6,7 @@
   - @all_ratings.each do |rating|
     = rating
     /third param is booleam if rating is included in the hash or not, checked all initially
-    = check_box_tag "ratings[#{rating}]", 1, if @ratings; @ratings.include?(rating) else true end
+    = check_box_tag "ratings[#{rating}]", 1, @ratings.include?(rating)
   = submit_tag 'Refresh', :id => 'ratings_submit'
 
 %table#movies
