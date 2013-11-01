@@ -26,6 +26,10 @@ class MoviesController < ApplicationController
       @ratings = session[:ratings]
       redirect = true
     else #default
+      @ratings = Hash.new
+      @all_ratings.each do |rating|
+        @ratings[rating] = true
+      end
 =begin
       @all_ratings.each do |rating|
         @ratings[rating] = true
