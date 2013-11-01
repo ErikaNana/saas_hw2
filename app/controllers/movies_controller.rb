@@ -26,10 +26,11 @@ class MoviesController < ApplicationController
       @ratings = session[:ratings]
       redirect = true
     else #default
+=begin
       @all_ratings.each do |rating|
-      @ratings[rating] = true
-      redirect = true
+        @ratings[rating] = true
       end
+=end
     end
 
 
@@ -43,7 +44,7 @@ class MoviesController < ApplicationController
 
       #sort and get the correct movies
       @checked = session[:ratings].keys
-      @movies = Movie.find(:all, :conditions =>{:rating =>@checked})
+
       if session[:sort] == 'title'
         @movies = Movie.find(:all, :conditions =>{:rating =>@checked}, :order => 'title ASC')
       elsif session[:sort] = 'release_date'
