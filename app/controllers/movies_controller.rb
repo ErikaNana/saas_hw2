@@ -6,6 +6,11 @@ class MoviesController < ApplicationController
     # will render app/views/movies/show.<extension> by default
   end
 
+  def search_tmdb
+    #hardcode to simulate failure
+    flash[:notice] = "'#{params[:search_terms]}' was not found in TMDb."
+    redirect_to movies_path
+  end
   def index
     @movies = Movie.all
     @all_ratings = Movie.getRatings
@@ -32,10 +37,13 @@ class MoviesController < ApplicationController
       end
     end
 
-
-    if redirect
+#do you really need this?
+=begin
+   if redirect
       redirect_to movies_path(:sort => @sort, :ratings => @ratings)
     end
+=end
+
 
       #update session so they can be persisted
       session[:sort] = @sort
